@@ -8,6 +8,7 @@ package tms.patterns;
  *
  * @author 3mora
  */
-public interface ITravelComponent {
-    
+public interface ITravelComponent{
+    String getDescription();
+    double getPrice();
 }

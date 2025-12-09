@@ -11,5 +11,15 @@ import tms.model.Accommodation;
  * @author 3mora
  */
 public class Resort extends Accommodation{
-    
+        private boolean HasPool;
+
+    public boolean isHasPool() {
+        return HasPool;
+    }
+
+    public void setHasPool(boolean HasPool) {
+        this.HasPool = HasPool;
+    }
+
+        
 }

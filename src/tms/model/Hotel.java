@@ -11,6 +11,15 @@ import tms.model.Accommodation;
  * @author 3mora
  */
 public class Hotel extends Accommodation {
-    
+        private boolean HasBreakFast;
+
+    public void setHasBreakFast(boolean HasBreakFast) {
+        this.HasBreakFast = HasBreakFast;
+    }
+
+    public boolean isHasBreakFast() {
+        return HasBreakFast;
+    }
+
     
 }

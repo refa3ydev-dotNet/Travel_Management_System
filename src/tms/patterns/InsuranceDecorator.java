@@ -8,20 +8,20 @@ package tms.patterns;
  *
  * @author 3mora
  */
-public abstract class TravelDecorator implements ITravelComponent{
-    protected ITravelComponent component;
+public class InsuranceDecorator extends TravelDecorator {
+    private double extraCost;
     
-    public TravelDecorator(ITravelComponent component){
-        this.component=component;
-    }
+    public InsuranceDecorator(ITravelComponent component, double extraCost){
+        super(component);
+        this.extraCost=extraCost;
     
+}
     @Override
     public String getDescription(){
-        
-        return component.getDescription();
+        return component.getDescription() + " Insurance";
     }
     @Override
     public double getPrice(){
-        return component.getPrice();
+        return component.getPrice() + extraCost;
     }
 }
