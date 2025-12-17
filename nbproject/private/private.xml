@@ -4,7 +4,26 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/TMS.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/fram1.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/manager/BookingManager.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/model/User.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/model/Accommodation.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/model/Booking.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/manager/UserProfileManager.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/model/TravelPackage.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/model/Flight.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/persistence/IBookingRepository.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/persistence/SQLBookingRepository.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/persistence/BookingRepositoryProxy.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/model/Hotel.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/model/Hostel.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/model/Resort.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/ITravelComponent.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/TravelDecorator.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/InsuranceDecorator.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/AccommodationFactory.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/TravelPackageBuilder.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/TravelPackageFactory.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/ui/Main_Menu.java</file>
         </group>
     </open-files>
 </project-private>

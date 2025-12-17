@@ -13,7 +13,7 @@ import tms.model.User;
  * @author 3mora
  */
 public class UserProfileManager {
-    private static UserProfileManager Instance;
+    private static UserProfileManager instance;
     private List<User> users;
     
     private UserProfileManager(){
@@ -21,17 +21,23 @@ public class UserProfileManager {
     }
     
     public static UserProfileManager getInstance(){
-        if(Instance == null){
-            Instance=new UserProfileManager();
+        if(instance == null){
+            instance=new UserProfileManager();
         }
-        return Instance;
+        return instance;
     }
     
     public User addUser(User user){
         if (user == null){
+            System.out.println("Sorry we can't add null user");
+            return null;
+        }
+        if(getUserById(user.getId()) != null){
+            System.err.println("user with Id "+ user.getId() + " already exist");
             return null;
         }
         users.add(user);
+        System.out.println("we added user "+ user.getName()+" suceessfully");
         return user;
     }
     
@@ -45,12 +51,27 @@ public class UserProfileManager {
     }
     public void addPointsToUser(int Id, int points)
     {
+        if (points <0){
+            System.out.println("please add positive number");
+            return ;
+        }
         User u = getUserById(Id);
         if(u!=null){
-            u.AddPoints(points);
+            u.addPoints(points);
         }
     }
     public List<User> getUsers(){
-        return users;
+        return new ArrayList<>(users);
+    }
+    public boolean deleteUser(int id){
+        User user= getUserById(id);
+        if (user!=null){
+            users.remove(user);
+            System.out.println("we deleted user "+user.getName()+ " successfully");
+            return true;
+        }
+            System.err.println("user with id "+ id +" is not found");
+        
+        return false;
     }
 }

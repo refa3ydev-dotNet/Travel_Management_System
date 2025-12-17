@@ -64,5 +64,10 @@ public class Flight {
         this.price = price;
     }
 
+    @Override
+    public String toString() {
+        return "Flight{" + "Id=" + Id + ", flightNumber=" + flightNumber + ", airLine=" + airLine + ", origin=" + origin + ", destination=" + destination + ", price=" + price + '}';
+    }
+
     
 }

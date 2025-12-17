@@ -4,10 +4,15 @@
  */
 package tms.persistence;
 
+import java.util.List;
+import tms.model.Booking;
+
 /**
  *
  * @author 3mora
  */
 public interface IBookingRepository {
-    
+    Booking getById(int id);
+    void save(Booking booking);
+    List<Booking> getAll();
 }

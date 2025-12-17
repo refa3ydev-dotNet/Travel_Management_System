@@ -65,4 +65,9 @@ public abstract class Accommodation {
     public double getRating() {
         return rating;
     }
+
+    @Override
+    public String toString() {
+        return "Accommodation{" + "Id=" + Id + ", name=" + name + ", location=" + location + ", pricePerNight=" + pricePerNight + ", capacity=" + capacity + ", rating=" + rating + '}';
+    }
 }

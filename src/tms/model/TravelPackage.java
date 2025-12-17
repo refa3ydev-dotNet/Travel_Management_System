@@ -79,6 +79,11 @@ public class TravelPackage implements ITravelComponent {
     public double getPrice() {
         return basePrice;
     }
+
+    @Override
+    public String toString() {
+        return "TravelPackage{" + "Id=" + Id + ", Name=" + Name + ", Type=" + Type + ", destination=" + destination + ", basePrice=" + basePrice + ", Activities=" + Activities + '}';
+    }
     
     
 }

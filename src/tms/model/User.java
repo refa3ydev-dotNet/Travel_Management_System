@@ -14,6 +14,17 @@ public class User {
     private String email;
     private int loyalPoints;
 
+    public User() {
+        this.loyalPoints = 0;
+    }
+
+    public User(int Id, String name, String email) {
+        this.Id = Id;
+        this.name = name;
+        this.email = email;
+        this.loyalPoints = 0;
+    }
+
     public void setId(int Id) {
         this.Id = Id;
     }
@@ -26,11 +37,14 @@ public class User {
         this.email = Email;
     }
 
-    public void setLoyalPoints(int LoyalPoints) {
-        this.loyalPoints = LoyalPoints;
+    public void setLoyalPoints(int loyalPoints) {
+        if (loyalPoints < 0) {
+            System.out.println("Loyal points cannot be negative.");
+            return;
+        }
+        this.loyalPoints = loyalPoints;
     }
 
-    
     public int getId() {
         return Id;
     }
@@ -46,10 +60,30 @@ public class User {
     public int getLoyalPoints() {
         return loyalPoints;
     }
-    
-    
-    
-    public void AddPoints(int points){
-        this.loyalPoints+=points;
+
+    public void addPoints(int points) {
+        if (points < 0) {
+            System.out.println("Points to add cannot be negative.");
+            return;
+        }
+        this.loyalPoints += points;
+    }
+
+    public boolean deductPoints(int points) {
+        if (points < 0) {
+            System.out.println("Points to deduct cannot be negative.");
+            return false;
+        }
+        if (this.loyalPoints < points) {
+            System.out.println("Insufficient loyal points.");
+            return false;
+        }
+        this.loyalPoints -= points;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "Id=" + Id + ", name=" + name + ", email=" + email + ", loyalPoints=" + loyalPoints + '}';
     }
 }

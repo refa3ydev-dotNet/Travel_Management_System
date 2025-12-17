@@ -88,4 +88,10 @@ public class Booking {
         }
         return totalPrice;
     }
+
+    @Override
+    public String toString() {
+        return "Booking{" + "Id=" + Id + ", bookingDate=" + bookingDate + ", status=" + status + ", totalPrice=" + totalPrice + ", user=" + user + ", component=" + component + ", accommodation=" + accommodation + ", flight=" + flight + '}';
+    }
+    
 }
