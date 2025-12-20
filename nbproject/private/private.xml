@@ -10,7 +10,6 @@
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/model/Booking.java</file>
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/manager/UserProfileManager.java</file>
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/model/TravelPackage.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/model/Flight.java</file>
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/persistence/IBookingRepository.java</file>
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/persistence/SQLBookingRepository.java</file>
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/persistence/BookingRepositoryProxy.java</file>
@@ -24,6 +23,10 @@
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/TravelPackageBuilder.java</file>
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/TravelPackageFactory.java</file>
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/ui/Main_Menu.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/MealPlanDecorator.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/TransportDecorator.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/GuideDecorator.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/AccommodationBuilder.java</file>
         </group>
     </open-files>
 </project-private>

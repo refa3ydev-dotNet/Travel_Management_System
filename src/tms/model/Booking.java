@@ -19,7 +19,6 @@ public class Booking {
     private User user;
     private ITravelComponent component;
     private Accommodation accommodation;
-    private Flight flight;
 
     public int getId() {
         return Id;
@@ -45,9 +44,6 @@ public class Booking {
         return accommodation;
     }
 
-    public Flight getFlight() {
-        return flight;
-    }
 
     public void setId(int Id) {
         this.Id = Id;
@@ -77,9 +73,6 @@ public class Booking {
         this.accommodation = accommodation;
     }
 
-    public void setFlight(Flight flight) {
-        this.flight = flight;
-    }
     
     
     public double getTotalPrice(){
@@ -91,7 +84,7 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking{" + "Id=" + Id + ", bookingDate=" + bookingDate + ", status=" + status + ", totalPrice=" + totalPrice + ", user=" + user + ", component=" + component + ", accommodation=" + accommodation + ", flight=" + flight + '}';
+        return "Booking{" + "Id=" + Id + ", bookingDate=" + bookingDate + ", status=" + status + ", totalPrice=" + totalPrice + ", user=" + user + ", component=" + component + ", accommodation=" + accommodation  + '}';
     }
     
 }

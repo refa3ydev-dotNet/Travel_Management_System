@@ -8,22 +8,23 @@ package tms.patterns;
  *
  * @author 3mora
  */
-public class InsuranceDecorator extends TravelDecorator {
-    private static double extraCost = 100;
-    
-    public InsuranceDecorator(ITravelComponent component){
+public class TransportDecorator extends TravelDecorator{
+    private static double transportCost=150;
+    public TransportDecorator(ITravelComponent component){
         super(component);
+        
+    }
     
-}
     @Override
     public String getDescription(){
-        return component.getDescription() + " Insurance";
+        return component.getDescription()+ "Airport Transfer";
     }
     @Override
     public double getPrice(){
-        return component.getPrice() + extraCost;
+        return component.getPrice()+transportCost;
     }
-        public static double getInsuranceCost() {
-        return extraCost;
+        public static double getTransportCost() {
+        return transportCost;
     }
 }
+
