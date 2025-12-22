@@ -27,6 +27,11 @@
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/TransportDecorator.java</file>
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/GuideDecorator.java</file>
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/patterns/AccommodationBuilder.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/ui/BookingsWindow.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/ui/UsersWindow.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/ui/PackageWindow.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/ui/AccommodationWindow.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/TMS/src/tms/ui/CreateBookingWindow.java</file>
         </group>
     </open-files>
 </project-private>

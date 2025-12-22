@@ -72,7 +72,7 @@ public class BookingManager {
     }
     public void refreshBooking(){
         try {
-        this.bookings=new ArrayList<>(repository.getAll());
+            this.bookings=new ArrayList<>(repository.getAll());
             System.out.println("refreshed successfully");
         } catch (Exception e) {
             System.err.println("Failed to refreshed Bookings " + e.getMessage());

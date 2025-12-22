@@ -4,19 +4,107 @@
  */
 package tms.ui;
 
+import java.util.Date;
+import tms.manager.BookingManager;
+import tms.manager.UserProfileManager;
+import tms.model.Booking;
+import tms.model.TravelPackage;
+import tms.model.User;
+import tms.patterns.GuideDecorator;
+import tms.patterns.ITravelComponent;
+import tms.patterns.InsuranceDecorator;
+import tms.patterns.MealPlanDecorator;
+import tms.patterns.TransportDecorator;
+import tms.patterns.TravelPackageFactory;
+
 /**
  *
  * @author 3mora
  */
 public class CreateBookingWindow extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CreateBookingWindow.class.getName());
+    private static CreateBookingWindow instance;
+    private UserProfileManager userManager;
+    private BookingManager bookingManager;
 
     /**
      * Creates new form CreateBookingWindow
      */
-    public CreateBookingWindow() {
+    private CreateBookingWindow() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
+        userManager = UserProfileManager.getInstance();
+        bookingManager = BookingManager.getInstance();
+        loadUsers();
+        setupListeners();
+
+    }
+
+    public static CreateBookingWindow getInstance() {
+        if (instance == null) {
+            instance = new CreateBookingWindow();
+        }
+        return instance;
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible) {
+            toFront();
+            requestFocus();
+        }
+    }
+
+    private void loadUsers() {
+        cmbUser.removeAllItems();
+        for (User user : userManager.getUsers()) {
+            cmbUser.addItem(user.getName());
+        }
+        if (cmbUser.getItemCount() == 0) {
+            cmbUser.addItem(null);
+            cmbUser.setEnabled(false);
+        }
+
+    }
+
+    private void setupListeners() {
+        Runnable updatePrice = this::calculateTotalPrice;
+
+        txtBasePrice.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent e) {
+                updatePrice.run();
+            }
+        });
+
+        chkInsurance.addActionListener(e -> updatePrice.run());
+        chkMeals.addActionListener(e -> updatePrice.run());
+        chkTransport.addActionListener(e -> updatePrice.run());
+        chkGuide.addActionListener(e -> updatePrice.run());
+    }
+
+    private void calculateTotalPrice() {
+        try {
+            double basePrice = Double.parseDouble(txtBasePrice.getText().trim());
+            double total = basePrice;
+            if (chkInsurance.isSelected()) {
+                total += InsuranceDecorator.getInsuranceCost();
+            }
+            if (chkMeals.isSelected()) {
+                total += MealPlanDecorator.getMealCost();
+            }
+            if (chkTransport.isSelected()) {
+                total += TransportDecorator.getTransportCost();
+            }
+            if (chkGuide.isSelected()) {
+                total += GuideDecorator.getGuideCost();
+            }
+            lblTotalPrice.setText("$" + String.format("%.2f", total));
+        } catch (NumberFormatException e) {
+            lblTotalPrice.setText("$0.00");
+        }
     }
 
     /**
@@ -28,21 +116,382 @@ public class CreateBookingWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        cmbUser = new javax.swing.JComboBox<>();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        cmbPackageType = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtDestination = new javax.swing.JTextField();
+        txtBasePrice = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        chkInsurance = new javax.swing.JCheckBox();
+        chkMeals = new javax.swing.JCheckBox();
+        chkTransport = new javax.swing.JCheckBox();
+        chkGuide = new javax.swing.JCheckBox();
+        jSeparator3 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        cmbStatus = new javax.swing.JComboBox<>();
+        lblTotalPrice = new javax.swing.JLabel();
+        btnCancel = new javax.swing.JButton();
+        btnCreate = new javax.swing.JButton();
+        BtnRefresh = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel4.setText("Create Booking");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel4)
+                .addGap(10, 10, 10))
+        );
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel1.setText("User");
+
+        cmbUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cmbUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbUser.addActionListener(this::cmbUserActionPerformed);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel2.setText("Package Type ");
+
+        cmbPackageType.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cmbPackageType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPackageType.addActionListener(this::cmbPackageTypeActionPerformed);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel3.setText("Destination");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel5.setText("Base Price");
+
+        txtDestination.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtDestination.addActionListener(this::txtDestinationActionPerformed);
+
+        txtBasePrice.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtBasePrice.addActionListener(this::txtBasePriceActionPerformed);
+
+        chkInsurance.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        chkInsurance.setText("Travel Insurance (+$100)");
+
+        chkMeals.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        chkMeals.setText("All Meals Included (+$150)");
+        chkMeals.addActionListener(this::chkMealsActionPerformed);
+
+        chkTransport.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        chkTransport.setText("Airport Transfer (+$150)");
+
+        chkGuide.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        chkGuide.setText("Professional Tour Guide (+$150)");
+        chkGuide.addActionListener(this::chkGuideActionPerformed);
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel6.setText("Status");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel7.setText("Total Price");
+
+        cmbStatus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblTotalPrice.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblTotalPrice.setText("$0.00");
+
+        btnCancel.setBackground(new java.awt.Color(223, 71, 89));
+        btnCancel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(this::btnCancelActionPerformed);
+
+        btnCreate.setBackground(new java.awt.Color(34, 187, 51));
+        btnCreate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCreate.setText("Create");
+        btnCreate.addActionListener(this::btnCreateActionPerformed);
+
+        BtnRefresh.setBackground(new java.awt.Color(255, 204, 0));
+        BtnRefresh.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BtnRefresh.setText("refresh");
+        BtnRefresh.addActionListener(this::BtnRefreshActionPerformed);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(chkInsurance, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chkMeals, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chkTransport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chkGuide, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jLabel7))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel6)
+                        .addGap(115, 115, 115)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblTotalPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbStatus, 0, 176, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cmbPackageType, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDestination, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtBasePrice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbUser, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BtnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancel)))
+                .addGap(42, 42, 42))
+            .addComponent(jSeparator3)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(cmbUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(cmbPackageType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBasePrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(chkInsurance)
+                .addGap(18, 18, 18)
+                .addComponent(chkMeals)
+                .addGap(18, 18, 18)
+                .addComponent(chkTransport)
+                .addGap(18, 18, 18)
+                .addComponent(chkGuide)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(lblTotalPrice))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 49, Short.MAX_VALUE))
+        );
+
+        jSeparator1.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmbUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbUserActionPerformed
+
+    private void cmbPackageTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPackageTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbPackageTypeActionPerformed
+
+    private void txtDestinationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDestinationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDestinationActionPerformed
+
+    private void txtBasePriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBasePriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBasePriceActionPerformed
+
+    private void chkMealsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkMealsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chkMealsActionPerformed
+
+    private void chkGuideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkGuideActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chkGuideActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        // TODO add your handling code here:
+        try {
+            User selectedUser = (User) cmbUser.getSelectedItem();
+            if (selectedUser == null) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Please add users first from 'Manage Users' window!",
+                        "No Users Available",
+                        javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String packageType = (String) cmbPackageType.getSelectedItem();
+            String destination = txtDestination.getText().trim();
+            String basePriceStr = txtBasePrice.getText().trim();
+            String status = (String) cmbStatus.getSelectedItem();
+
+            if (destination.isEmpty() || basePriceStr.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Please fill all required fields!",
+                        "Validation Error",
+                        javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            double basePrice = Double.parseDouble(basePriceStr);
+
+            TravelPackage travelPackage = TravelPackageFactory.createPackage(packageType,
+                    destination,
+                    basePrice);
+
+            ITravelComponent component = travelPackage;
+
+            if (chkInsurance.isSelected()) {
+                component = new InsuranceDecorator(component);
+            }
+            if (chkMeals.isSelected()) {
+                component = new MealPlanDecorator(component);
+            }
+            if (chkTransport.isSelected()) {
+                component = new TransportDecorator(component);
+            }
+            if (chkGuide.isSelected()) {
+                component = new GuideDecorator(component);
+            }
+
+            Booking booking = new Booking();
+            booking.setUser(selectedUser);
+            booking.setComponent(component);
+            booking.setStatus(status);
+            booking.setBookingDate(new Date());
+
+            Booking created = bookingManager.createBooking(booking);
+
+            if (created != null) {
+                StringBuilder addonsMsg = new StringBuilder();
+                if (chkInsurance.isSelected()) {
+                    addonsMsg.append("Travel Insurance\n");
+                }
+                if (chkMeals.isSelected()) {
+                    addonsMsg.append("All Meals\n");
+                }
+                if (chkTransport.isSelected()) {
+                    addonsMsg.append("Airport Transfer\n");
+                }
+                if (chkGuide.isSelected()) {
+                    addonsMsg.append("Tour Guide\n");
+                }
+
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Booking Created Successfully\n\n"
+                        + "Booking ID " + created.getId() + "\n"
+                        + "User " + selectedUser.getName() + "\n"
+                        + "Package " + component.getDescription() + "\n"
+                        + "Status " + status + "\n\n"
+                        + "Add-ons\n" + (addonsMsg.length() > 0 ? addonsMsg.toString() : "none") + "\n"
+                        + "Total Price " + String.format("%.2f", created.getTotalPrice()),
+                        "Success",
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+                txtDestination.setText("");
+                txtBasePrice.setText("");
+                chkInsurance.setSelected(false);
+                chkMeals.setSelected(false);
+                chkTransport.setSelected(false);
+                chkGuide.setSelected(false);
+                lblTotalPrice.setText("$0.00");
+
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Failed to create booking!",
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Invalid price format!",
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Error: " + ex.getMessage(),
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void BtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRefreshActionPerformed
+        // TODO add your handling code here:
+        loadUsers();
+    }//GEN-LAST:event_BtnRefreshActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +519,30 @@ public class CreateBookingWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnRefresh;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnCreate;
+    private javax.swing.JCheckBox chkGuide;
+    private javax.swing.JCheckBox chkInsurance;
+    private javax.swing.JCheckBox chkMeals;
+    private javax.swing.JCheckBox chkTransport;
+    private javax.swing.JComboBox<String> cmbPackageType;
+    private javax.swing.JComboBox<String> cmbStatus;
+    private javax.swing.JComboBox<String> cmbUser;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel lblTotalPrice;
+    private javax.swing.JTextField txtBasePrice;
+    private javax.swing.JTextField txtDestination;
     // End of variables declaration//GEN-END:variables
 }

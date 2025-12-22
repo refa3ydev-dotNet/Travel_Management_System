@@ -4,6 +4,7 @@
  */
 package tms.ui;
 
+import tms.manager.AccommodationManager;
 import tms.patterns.AccommodationBuilder;
 import tms.model.Accommodation;
 import tms.model.Hostel;
@@ -18,13 +19,16 @@ public class AccommodationWindow extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AccommodationWindow.class.getName());
     private static AccommodationWindow instance=null;
+    private AccommodationManager accommodationManager;
     /**
      * Creates new form AccommodationWindow
      */
     private AccommodationWindow() {
         initComponents();
         setLocationRelativeTo(null);
+        accommodationManager= AccommodationManager.getInstance();
         setResizable(false);
+        setuplisteners();
     }
 
     public static AccommodationWindow getInstance(){
@@ -42,6 +46,7 @@ public class AccommodationWindow extends javax.swing.JFrame {
             requestFocus();
         }
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -294,10 +299,9 @@ public class AccommodationWindow extends javax.swing.JFrame {
             String location = txtLocation.getText().trim();
             double price = Double.parseDouble(txtPrice.getText().trim());
             int capacity = Integer.parseInt(txtCapacity.getText().trim());
-            double rating = Double.parseDouble(txtLocation.getText().trim());
+            double rating = Double.parseDouble(txtRating.getText().trim());
 
             if (name.isEmpty() || location.isEmpty()) {
-
                 javax.swing.JOptionPane.showMessageDialog(this,
                         "Name and Location are required!\n ",
                         "Validation Error",
@@ -319,7 +323,10 @@ public class AccommodationWindow extends javax.swing.JFrame {
                 builder.setHasPool(true);
             }
             Accommodation accommodation = builder.build();
-
+            
+            Accommodation saved =accommodationManager.addAccommodation(accommodation);
+if(saved !=null){
+    
             String features = "";
             if (accommodation instanceof Hotel) {
                 features = "\nBreakfast: " + ((Hotel) accommodation).isHasBreakFast();
@@ -350,9 +357,10 @@ public class AccommodationWindow extends javax.swing.JFrame {
             chkBreakfast.setSelected(false);
             chkPool.setSelected(false);
             chkShared.setSelected(false);
+}
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "Invalid number format!\nPlease check Price, Capacity, and Rating.",
+                    "Invalid number format!\nPlease check Price, Capacity, and Rating."+e.getMessage(),
                     "Error",
                     javax.swing.JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {

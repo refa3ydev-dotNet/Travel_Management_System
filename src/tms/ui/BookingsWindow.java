@@ -211,6 +211,7 @@ public class BookingsWindow extends javax.swing.JFrame {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
+        CreateBookingWindow.getInstance().setVisible(true);
         loadBookings();
         
     }//GEN-LAST:event_btnCreateActionPerformed

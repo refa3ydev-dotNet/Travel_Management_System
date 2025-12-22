@@ -56,5 +56,8 @@ public class TMS {
 //            u1.deductPoints(30);
 //            System.out.println("Remaining points: " + u1.getLoyalPoints());
 //        }
+
+Main_Menu mn=new Main_Menu();
+mn.setVisible(true);
     }
 }
