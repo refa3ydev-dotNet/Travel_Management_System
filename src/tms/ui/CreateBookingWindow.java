@@ -177,7 +177,7 @@ public class CreateBookingWindow extends javax.swing.JFrame {
         jLabel2.setText("Package Type ");
 
         cmbPackageType.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cmbPackageType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPackageType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Luxury", "Adventure", "Culture", "Beach", "City Tour" }));
         cmbPackageType.addActionListener(this::cmbPackageTypeActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -213,7 +213,7 @@ public class CreateBookingWindow extends javax.swing.JFrame {
         jLabel7.setText("Total Price");
 
         cmbStatus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CONFIRMED", "PENDING" }));
 
         lblTotalPrice.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTotalPrice.setText("$0.00");
