@@ -12,7 +12,7 @@ public class GuideDecorator extends TravelDecorator{
     private static double guideCost=150;
 
     public GuideDecorator(ITravelComponent component ) {
-        super(null);
+        super(component);
         
     }
     
